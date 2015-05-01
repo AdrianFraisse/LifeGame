@@ -8,8 +8,8 @@ import java.util.{TimerTask, Timer, Observable}
  * Singleton object for main execution.
  */
 object MainPrg extends Observable {
-  val WorldHeight = 80
-  val WorldWidth = 100
+  val WorldHeight = 400
+  val WorldWidth = 400
 
   val Nanoseconds = 1000000000
   val Fps = 25

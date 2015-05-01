@@ -4,9 +4,11 @@ package lifegame.core
  * @author Adrian
  */
 class World(val width: Int, val height: Int) {
-  val cells: List[List[Cell]] = buildSame(new Cell(false))
+//  val cells: IndexedSeq[IndexedSeq[Cell]] = buildSame(new Cell(false))
+  val cells: IndexedSeq[IndexedSeq[Cell]] = buildSame(new Cell(false))
 
-  var neighbors: List[List[Int]] = buildSame(0)
+  var neighbors: IndexedSeq[IndexedSeq[Int]] = buildSame(0)
+//  var neighbors : IndexedSeq[IndexedSeq[Int]] = buildSame(0)
 
   def setCell(x: Int, y: Int, alive: Boolean) =
     cells(x)(y).alive = alive
@@ -15,13 +17,13 @@ class World(val width: Int, val height: Int) {
       Some(cells(x)(y))
 
   // Construit une liste de listes de T avec la fonction passée en param
-  def build[T](f: (Int, Int) => T) : List[List[T]] =
+  def build[T](f: (Int, Int) => T) : IndexedSeq[IndexedSeq[T]] =
     (for (x <- 0 to width)
        yield (for (y <- 0 to height)
-         yield f(x, y)).toList)
-      .toList
+         yield f(x, y)).toIndexedSeq)
+      .toIndexedSeq
 
-  def buildSame[T](f: => T) :  List[List[T]] = build((_, _) => f)
+  def buildSame[T](f: => T) :  IndexedSeq[IndexedSeq[T]] = build((_, _) => f)
 
   def update(time: Double) = synchronized {
     // Lois pour une cellule :
