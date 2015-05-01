@@ -134,7 +134,6 @@ object MainFrame extends App {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 
     MainPrg.addObserver(frame.worldComponent)
-
     frame.repaint()
     frame.invalidate()
   }

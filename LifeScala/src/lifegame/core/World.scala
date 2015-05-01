@@ -9,10 +9,10 @@ class World(val width: Int, val height: Int) {
   var neighbors: List[List[Int]] = buildSame(0)
 
   def setCell(x: Int, y: Int, alive: Boolean) =
-    cells(x)(y).alive == alive
+    cells(x)(y).alive = alive
 
   def getCell(x: Int, y: Int) : Option[Cell] =
-      Some(cells(x)(y));
+      Some(cells(x)(y))
 
   // Construit une liste de listes de T avec la fonction passée en param
   def build[T](f: (Int, Int) => T) : List[List[T]] =
@@ -30,28 +30,22 @@ class World(val width: Int, val height: Int) {
 
     neighbors = build(countLivingNeighbors)
 
-    var c: Cell = null
-    var n: Int = 0
-    for (x <- 0 to width) {
-      for (y <- 0 to height) {
-        c = cells(x)(y)
+    // mise à jour des cellules
+    var n = 0
+    for (x <- 0 to width - 1)
+      for (y <- 0 to height - 1) {
         n = neighbors(x)(y)
-        if (c.alive) {
-          if (n <= 2 || n >= 4)
-            c.alive = false
-        } else {
-          if (n == 3)
-            c.alive = true
-        }
+        if (cells(x)(y).alive && (n < 2 || n >= 4))
+          cells(x)(y).alive = false
+        else if (n == 3)
+          cells(x)(y).alive = true
       }
-    }
-
   }
 
   def tue(): Unit = synchronized {
-    for (e <- cells)
-      for (l <- e)
-        l.alive = false
+    for (l <- cells)
+      for (e <- l)
+        e.alive = false
   }
 
   def countLivingNeighbors(x: Int, y: Int): Int = {

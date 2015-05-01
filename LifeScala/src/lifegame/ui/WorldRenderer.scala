@@ -9,7 +9,7 @@ import lifegame.core.World
  *
  * Prints the world and its cells
  */
-class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: Int = 0) {
+class WorldRenderer(val world: World, private var _viewWidth: Int = 0, private var _viewHeight: Int = 0) {
 
   var cellWidth = WorldRenderer.CellWidth
   var cellHeight = WorldRenderer.CellHeight
@@ -18,6 +18,19 @@ class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: In
   var zoom = 1.0
   var viewX = 0
   var viewY = 0
+
+  def viewWidth = _viewWidth
+  def viewWidth_(width: Int): Unit = {
+    _viewWidth = width
+    viewX = viewWidth/2
+  }
+
+  def viewHeight = _viewHeight
+  def viewHeight_(height: Int): Unit = {
+    _viewHeight = height
+    viewY = viewHeight/2
+
+  }
 
   def setZoom(zoom: Double) = {
     this.zoom = zoom
@@ -34,8 +47,8 @@ class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: In
     val cdx = xd * cellWidth - (viewX - viewWidth / 2)
     val cdy = yd * cellHeight - (viewY - viewHeight / 2)
 
-    val cx = x - cdx/cellWidth
-    val cy = y - cdy/cellHeight
+    val cx = (x - cdx) / cellWidth
+    val cy = (y - cdy) / cellHeight
 
     world.setCell(cx + xd, cy + yd, alive)
   }
@@ -45,8 +58,8 @@ class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: In
     where.setColor(WorldRenderer.BackgroundColor)
     where.fillRect(0, 0, viewWidth, viewHeight)
 
-    var xd = ((viewX- viewWidth / 2.0) / cellWidth).toInt
-    var yd = ((viewY - viewHeight / 2.0) / cellHeight).toInt
+    var xd = ((viewX - viewWidth/2.0) / cellWidth).toInt
+    var yd = ((viewY - viewHeight/2.0) / cellHeight).toInt
     if (xd < 0) xd = 0
     if (yd < 0) yd = 0
 
@@ -55,14 +68,14 @@ class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: In
     if (xf >= world.width) xf = world.width - 1
     if (yf >= world.height) yf = world.height - 1
 
-    var cx = xd * cellWidth - (viewX - viewWidth / 2)
+    var cx = xd * cellWidth - (viewX - viewWidth/2)
     var cy = 0
     val cdy = yd * cellHeight - (viewY - viewHeight/2)
 
     for (x <- xd to xf) {
       cy = cdy
       for (y <- yd to yf) {
-        where.setColor(WorldRenderer.BackgroundColor)
+        where.setColor(WorldRenderer.BorderColor)
         where.drawRect(cx, cy, cellWidth, cellHeight)
 
         if (world.getCell(x, y).get.alive) {

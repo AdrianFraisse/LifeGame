@@ -8,21 +8,21 @@ import java.util.{TimerTask, Timer, Observable}
  * Singleton object for main execution.
  */
 object MainPrg extends Observable {
-  val WorldHeight = 400
-  val WorldWidth = 400
+  val WorldHeight = 80
+  val WorldWidth = 100
 
   val Nanoseconds = 1000000000
   val Fps = 25
 
-  var stepByStep: Boolean = false
-  var started: Boolean = false
-  var paused: Boolean = false
+  var stepByStep = false
+  var started = false
+  var paused = false
 
   var startTime: Long = 0
   var pauseTime: Long = 0
   var lastSec: Long = 0
 
-  val world = World(WorldHeight, WorldWidth)
+  val world = World(WorldWidth, WorldHeight)
 
   def start() = {
     if (started) throw new RuntimeException("World already running")
@@ -35,7 +35,6 @@ object MainPrg extends Observable {
     lastSec= System.currentTimeMillis()
 
     timer.scheduleAtFixedRate(new TimerTask {
-      // TODO : Refactor
       override def run(): Unit = {
         if (!paused) {
           nextFrame(System.nanoTime() - startTime)
@@ -52,14 +51,14 @@ object MainPrg extends Observable {
 
   }
 
-  def pause() = {
+  def pause() = synchronized {
     if (!started) throw new RuntimeException("World not started")
     if (paused) throw new RuntimeException("World already paused")
     pauseTime = System.nanoTime()
     paused = true
   }
 
-  def resume() = {
+  def resume() = synchronized {
     if (!started) throw new RuntimeException("World not started")
     if (!paused) throw new RuntimeException("World not paused")
 

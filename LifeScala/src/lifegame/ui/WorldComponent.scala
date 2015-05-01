@@ -40,8 +40,8 @@ class WorldComponent extends JComponent with Observer with MouseListener with Mo
   }
 
   override def componentResized(e: ComponentEvent): Unit = {
-    worldRenderer.viewWidth = this.getWidth
-    worldRenderer.viewHeight = this.getHeight
+    worldRenderer.viewWidth_(this.getWidth)
+    worldRenderer.viewHeight_(this.getHeight)
   }
 
   override def mouseEntered(e: MouseEvent): Unit = {}
