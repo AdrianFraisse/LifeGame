@@ -6,6 +6,8 @@ import lifegame.core.World
 
 /**
  * Created by Adrian on 30/04/15.
+ *
+ * Prints the world and its cells
  */
 class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: Int = 0) {
 
@@ -32,8 +34,8 @@ class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: In
     val cdx = xd * cellWidth - (viewX - viewWidth / 2)
     val cdy = yd * cellHeight - (viewY - viewHeight / 2)
 
-    val cx = (x-cdx/cellWidth)
-    val cy = (y-cdy/cellHeight)
+    val cx = x - cdx/cellWidth
+    val cy = y - cdy/cellHeight
 
     world.setCell(cx + xd, cy + yd, alive)
   }

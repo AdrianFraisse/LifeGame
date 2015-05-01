@@ -3,16 +3,26 @@ package lifegame.core
 import java.util.{TimerTask, Timer, Observable}
 
 /**
- * Created by Adrian on 30/04/15.
+ * @author Adrian Fraisse
+ *
+ * Singleton object for main execution.
  */
-class MainPrg(val world: World, var stepByStep: Boolean = false, var started: Boolean = false, var paused: Boolean = false) extends Observable {
+object MainPrg extends Observable {
+  val WorldHeight = 400
+  val WorldWidth = 400
 
-  val NanoSeconds = 1000000000
+  val Nanoseconds = 1000000000
   val Fps = 25
-  
+
+  var stepByStep: Boolean = false
+  var started: Boolean = false
+  var paused: Boolean = false
+
   var startTime: Long = 0
   var pauseTime: Long = 0
   var lastSec: Long = 0
+
+  val world = World(WorldHeight, WorldWidth)
 
   def start() = {
     if (started) throw new RuntimeException("World already running")
@@ -48,7 +58,7 @@ class MainPrg(val world: World, var stepByStep: Boolean = false, var started: Bo
     pauseTime = System.nanoTime()
     paused = true
   }
-  
+
   def resume() = {
     if (!started) throw new RuntimeException("World not started")
     if (!paused) throw new RuntimeException("World not paused")
@@ -59,14 +69,6 @@ class MainPrg(val world: World, var stepByStep: Boolean = false, var started: Bo
   }
 
   def nextFrame(time: Long) = synchronized {
-    world.update(time/NanoSeconds)
+    world.update(time/Nanoseconds)
   }
-
-}
-
-object MainPrg {
-  val WorldHeight = 400
-  val WorldWidth = 400
-
-  def apply() = new MainPrg(new World(WorldWidth, WorldHeight))
 }

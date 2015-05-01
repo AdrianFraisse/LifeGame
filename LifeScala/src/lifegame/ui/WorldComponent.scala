@@ -9,10 +9,12 @@ import lifegame.core.MainPrg
 
 /**
  * Created by Adrian on 30/04/15.
+ *
+ * Main GUI, displays cells
  */
 class WorldComponent extends JComponent with Observer with MouseListener with MouseMotionListener with ComponentListener {
 
-  val worldRenderer = WorldRenderer(MainPrg().world, this.getVisibleRect.width, this.getVisibleRect.height)
+  val worldRenderer = WorldRenderer(MainPrg.world, this.getVisibleRect.width, this.getVisibleRect.height)
   worldRenderer.viewX = worldRenderer.viewWidth / 2
   worldRenderer.viewY = worldRenderer.viewHeight / 2
 
@@ -28,13 +30,13 @@ class WorldComponent extends JComponent with Observer with MouseListener with Mo
   override def update(o: Observable, arg: scala.Any): Unit = repaint()
 
   override def mouseClicked(e: MouseEvent): Unit = e.getButton match {
-    case MouseEvent.BUTTON1 => worldRenderer.setCell(true, e.getX, e.getY)
-    case MouseEvent.BUTTON3 => worldRenderer.setCell(false, e.getX, e.getY)
+    case MouseEvent.BUTTON1 => worldRenderer.setCell(alive = true, e.getX, e.getY)
+    case MouseEvent.BUTTON3 => worldRenderer.setCell(alive = false, e.getX, e.getY)
   }
 
   override def mouseDragged(e: MouseEvent): Unit = e.getButton match {
-    case MouseEvent.BUTTON1 => worldRenderer.setCell(true, e.getX, e.getY)
-    case MouseEvent.BUTTON3 => worldRenderer.setCell(false, e.getX, e.getY)
+    case MouseEvent.BUTTON1 => worldRenderer.setCell(alive = true, e.getX, e.getY)
+    case MouseEvent.BUTTON3 => worldRenderer.setCell(alive = false, e.getX, e.getY)
   }
 
   override def componentResized(e: ComponentEvent): Unit = {
@@ -42,12 +44,12 @@ class WorldComponent extends JComponent with Observer with MouseListener with Mo
     worldRenderer.viewHeight = this.getHeight
   }
 
-  override def mouseEntered(e: MouseEvent): Unit = ???
-  override def mousePressed(e: MouseEvent): Unit = ???
-  override def mouseReleased(e: MouseEvent): Unit = ???
-  override def mouseMoved(e: MouseEvent): Unit = ???
-  override def mouseExited(e: MouseEvent): Unit = ???
-  override def componentShown(e: ComponentEvent): Unit = ???
-  override def componentHidden(e: ComponentEvent): Unit = ???
-  override def componentMoved(e: ComponentEvent): Unit = ???
+  override def mouseEntered(e: MouseEvent): Unit = {}
+  override def mousePressed(e: MouseEvent): Unit = {}
+  override def mouseReleased(e: MouseEvent): Unit = {}
+  override def mouseMoved(e: MouseEvent): Unit = {}
+  override def mouseExited(e: MouseEvent): Unit = {}
+  override def componentShown(e: ComponentEvent): Unit = {}
+  override def componentHidden(e: ComponentEvent): Unit = {}
+  override def componentMoved(e: ComponentEvent): Unit = {}
 }

@@ -9,6 +9,8 @@ import lifegame.core.MainPrg
 
 /**
  * Created by Adrian on 30/04/15.
+ *
+ * Main lifegame's frame
  */
 class MainFrame extends JFrame{
   val worldComponent: WorldComponent = new WorldComponent()
@@ -62,15 +64,15 @@ class MainFrame extends JFrame{
 
   // Controls
   val startButton = new JButton("Start")
-  startButton.addActionListener((e: ActionEvent) => { MainPrg().resume() })
+  startButton.addActionListener((e: ActionEvent) => { MainPrg.resume() })
 
   val pauseButton = new JButton("Pause")
-  pauseButton.addActionListener((e: ActionEvent) => { MainPrg().pause() })
+  pauseButton.addActionListener((e: ActionEvent) => { MainPrg.pause() })
 
   val clearButton = new JButton("Clear")
-  pauseButton.addActionListener((e: ActionEvent) => { MainPrg().world.tue() })
+  pauseButton.addActionListener((e: ActionEvent) => { MainPrg.world.tue() })
 
-  def addComponentToPane = {
+  def addComponentToPane() = {
     val panel = getContentPane
     panel.setLayout(new BorderLayout())
 
@@ -78,7 +80,7 @@ class MainFrame extends JFrame{
     sp.setLayout(new BorderLayout())
     sp.add(worldComponent, BorderLayout.CENTER)
     sp.add(xScrollBar, BorderLayout.SOUTH)
-    sp.add(yScrollBar, BorderLayout.CENTER)
+    sp.add(yScrollBar, BorderLayout.EAST)
 
     val controls = new JPanel()
     controls.setLayout(new BoxLayout(controls, BoxLayout.X_AXIS))
@@ -120,16 +122,18 @@ object MainFrame extends App {
   val FrameHeight = 600
   val Title = "LifeGame by A. Fraisse"
 
-  createAndShowGUI
+  createAndShowGUI()
+  MainPrg.start()
+  MainPrg.pause()
 
-  private def createAndShowGUI = {
+  private def createAndShowGUI() = {
     val frame = new MainFrame()
-    frame.addComponentToPane
+    frame.addComponentToPane()
     frame.setVisible(true)
     frame.setSize(MainFrame.FrameWidth, MainFrame.FrameHeight)
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
 
-    MainPrg().addObserver(frame.worldComponent)
+    MainPrg.addObserver(frame.worldComponent)
 
     frame.repaint()
     frame.invalidate()

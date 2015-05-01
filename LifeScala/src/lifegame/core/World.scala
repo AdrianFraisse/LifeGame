@@ -1,7 +1,7 @@
 package lifegame.core
 
 /**
- * Created by Adrian on 28/04/15.
+ * @author Adrian
  */
 class World(val width: Int, val height: Int) {
   val cells: List[List[Cell]] = buildSame(new Cell(false))
@@ -12,7 +12,7 @@ class World(val width: Int, val height: Int) {
     cells(x)(y).alive == alive
 
   def getCell(x: Int, y: Int) : Option[Cell] =
-      return Some(cells(x)(y));
+      Some(cells(x)(y));
 
   // Construit une liste de listes de T avec la fonction passée en param
   def build[T](f: (Int, Int) => T) : List[List[T]] =
@@ -55,15 +55,17 @@ class World(val width: Int, val height: Int) {
   }
 
   def countLivingNeighbors(x: Int, y: Int): Int = {
-    var nb: Int = 0
+    var nb = 0
     for (yc <- y-1 to y+1 if yc >= 0 && yc < height )
       for (xc <- x-1 to x+1 if xc >= 0 && xc < width && (xc != x || yc != y))
         if (cells(xc)(yc).alive)
-          nb = nb + 1;
+          nb = nb + 1
         if (cells(x)(y).alive && nb >= 4)
           return nb
     nb
   }
+}
 
-
+object World {
+  def apply(width: Int, height: Int) = new World(width, height)
 }
