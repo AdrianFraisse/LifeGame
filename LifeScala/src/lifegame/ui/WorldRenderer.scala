@@ -7,7 +7,7 @@ import lifegame.core.World
 /**
  * Created by Adrian on 30/04/15.
  */
-class WorldRenderer(val world: World, val viewWidth: Int = 0, val viewHeight: Int = 0) {
+class WorldRenderer(val world: World, var viewWidth: Int = 0, var viewHeight: Int = 0) {
 
   var cellWidth = WorldRenderer.CellWidth
   var cellHeight = WorldRenderer.CellHeight
