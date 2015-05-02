@@ -14,28 +14,28 @@ import lifegame.core.MainPrg
  */
 class MainFrame extends JFrame{
   val worldComponent: WorldComponent = new WorldComponent()
-  val xScrollBar = new JScrollBar()
-  val yScrollBar = new JScrollBar()
 
   // Horizontal ScrollBar
+  val xScrollBar = new JScrollBar()
   xScrollBar.setOrientation(0)
   xScrollBar.addAdjustmentListener((e: AdjustmentEvent)  => {
     worldComponent.worldRenderer.viewX = e.getValue + worldComponent.worldRenderer.viewWidth / 2
   })
   xScrollBar.addComponentListener((e: ComponentEvent) => {
-    val sc: JScrollBar = e.getSource.asInstanceOf[JScrollBar]
+    val sc = e.getSource.asInstanceOf[JScrollBar]
     sc.setMaximum(worldComponent.worldRenderer.totalWidth)
     sc.setMinimum(0)
     sc.setVisibleAmount(worldComponent.worldRenderer.viewWidth)
   })
 
   // Vertical ScrollBar
+  val yScrollBar = new JScrollBar()
   yScrollBar.setOrientation(1)
   yScrollBar.addAdjustmentListener((e: AdjustmentEvent) => {
     worldComponent.worldRenderer.viewY = e.getValue + worldComponent.worldRenderer.viewHeight / 2
   })
   yScrollBar.addComponentListener((e: ComponentEvent) => {
-    val sc: JScrollBar = e.getSource.asInstanceOf[JScrollBar]
+    val sc = e.getSource.asInstanceOf[JScrollBar]
     sc.setMaximum(worldComponent.worldRenderer.totalHeight)
     sc.setMinimum(0)
     sc.setVisibleAmount(worldComponent.worldRenderer.viewHeight)
@@ -70,7 +70,7 @@ class MainFrame extends JFrame{
   pauseButton.addActionListener((e: ActionEvent) => { MainPrg.pause() })
 
   val clearButton = new JButton("Clear")
-  pauseButton.addActionListener((e: ActionEvent) => { MainPrg.world.tue() })
+  clearButton.addActionListener((e: ActionEvent) => { MainPrg.clear() })
 
   def addComponentToPane() = {
     val panel = getContentPane

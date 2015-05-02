@@ -67,6 +67,14 @@ object MainPrg extends Observable {
     paused = false
   }
 
+  def clear() = synchronized {
+    if (!paused) {
+      pauseTime = System.nanoTime()
+      paused = true
+    }
+    world.tue()
+  }
+
   def nextFrame(time: Long) = synchronized {
     world.update(time/Nanoseconds)
   }

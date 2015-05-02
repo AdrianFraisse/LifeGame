@@ -18,10 +18,9 @@ class World(val width: Int, val height: Int) {
 
   // Construit une liste de listes de T avec la fonction passée en param
   def build[T](f: (Int, Int) => T) : IndexedSeq[IndexedSeq[T]] =
-    (for (x <- 0 to width)
-       yield (for (y <- 0 to height)
-         yield f(x, y)).toIndexedSeq)
-      .toIndexedSeq
+    for (x <- 0 to width)
+       yield for (y <- 0 to height)
+         yield f(x, y)
 
   def buildSame[T](f: => T) :  IndexedSeq[IndexedSeq[T]] = build((_, _) => f)
 
@@ -44,7 +43,7 @@ class World(val width: Int, val height: Int) {
       }
   }
 
-  def tue(): Unit = synchronized {
+  def tue(): Unit = {
     for (l <- cells)
       for (e <- l)
         e.alive = false
