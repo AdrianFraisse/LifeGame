@@ -29,7 +29,6 @@ class WorldRenderer(val world: World, private var _viewWidth: Int = 0, private v
   def viewHeight_(height: Int): Unit = {
     _viewHeight = height
     viewY = viewHeight/2
-
   }
 
   def setZoom(zoom: Double) = {

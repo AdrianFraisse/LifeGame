@@ -11,7 +11,7 @@ class World(val width: Int, val height: Int) {
 //  var neighbors : IndexedSeq[IndexedSeq[Int]] = buildSame(0)
 
   def setCell(x: Int, y: Int, alive: Boolean) =
-    cells(x)(y).alive = alive
+    if (!(x < 0 || x > width || y < 0 || y > height)) cells(x)(y).alive = alive
 
   def getCell(x: Int, y: Int) : Option[Cell] =
       Some(cells(x)(y))
